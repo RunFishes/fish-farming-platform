@@ -12,6 +12,6 @@ export default defineConfig({
 	},
 	// 主动开启热更新
 	server: {
-		hmr: true
+		hmr: true,
 	}
 })

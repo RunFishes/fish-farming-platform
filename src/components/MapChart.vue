@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- 中国地图 -->
 		<div ref="target" class="w-full h-full"></div>
 	</div>
 </template>
@@ -158,7 +159,7 @@ const renderChart = () => {
 			title: [
 				// 主标题，对应地图
 				{
-					text: '2019-2023 年度数据统计',
+					text: '2019-2023 淡水鱼产量各省产出（万吨）',
 					left: '0%',
 					top: '0',
 					textStyle: {

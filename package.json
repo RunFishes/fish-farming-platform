@@ -13,7 +13,11 @@
     "countup.js": "^2.6.2",
     "echarts": "^5.4.2",
     "echarts-wordcloud": "^2.1.0",
-    "vue": "^3.2.47"
+    "element-plus": "^2.5.1",
+    "sass": "^1.69.7",
+    "sass-loader": "^14.0.0",
+    "vue": "^3.2.47",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
