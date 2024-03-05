@@ -1,41 +1,60 @@
 <template>
-   <div class="loginBox">
-        <el-form>
-            <p class="title">登陆</p>
-            <el-form-item label="账号" class="item">
-                <el-input v-model="loginForm.account" placeholder="请输入帐号"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" class="item">
-                <el-input v-model="loginForm.password" placeholder="请输入密码"></el-input>
-            </el-form-item>
-        </el-form>
-   </div> 
+   <ElForm class="login-form" ref="loginRef" :model="loginParam" :rules="loginRules">
+        <h1 class="login-title">登录</h1>
+        <ElFormItem prop="username">
+            <ElInput placeholder="请输入账号" :prefix-icon="User" v-model="loginParam.username" size="large"></ElInput>
+        </ElFormItem>
+        <ElFormItem prop="password">
+            <ElInput placeholder="请输入密码" show-password :prefix-icon="Lock" v-model="loginParam.password" size="large"></ElInput>
+        </ElFormItem>
+        <ElFormItem>
+            <ElButton type="primary" class="login-btn" size="large" @click="submit(loginRef)" style="color:skyblue">登录</ElButton>
+        </ElFormItem>
+    </ElForm>
 </template>
 
 <script setup>
+import { ElFormItem,ElButton,ElInput } from 'element-plus'
+import { User ,Lock} from '@element-plus/icons-vue';
 import { reactive } from 'vue';
 
 
-const loginForm = reactive({
-    account:undefined,
+const loginParam = reactive({
+    username:undefined,
     password:undefined
 }) 
+
+const loginRules=reactive({
+    username:[{required:true,message:"账号不能为空",trigger:'blur'}],
+    password:[{required:true,message:"密码不能为空",trigger:'blur'}]
+})
+
 
 </script>
 
 
 <style lang="scss" scoped>
-    .loginBox {
-        height:500px;
-        width: 350px;
-        border-radius: 10px;
-        border: 1px solid rgba(2, 2, 2, 0.5);
-        .title {
-            font-size: 20px;
-            font-weight: 700;
-        }
-        .item {
-            width: 200px;
-        }
-    }
+.login-form{
+    grid-column: 1;
+    grid-row: 1;
+    opacity: 1;
+    transition: 1s ease-in-out;
+    transition-delay: 0.5s;
+    /* 上下 | 左右 */
+    padding: 1% 25%;
+    z-index: 1;
+}
+.login-form.sign-up-model{
+    opacity: 0;
+    transition: 1s ease-in-out;
+    z-index: 0;
+}
+.login-title{
+    text-align: center;
+    color:#444;
+}
+.login-btn{
+    width: 100%;
+    font-size: 18px;
+}
 </style>
