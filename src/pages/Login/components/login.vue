@@ -14,10 +14,14 @@
 </template>
 
 <script setup>
+import  {ref} from 'vue'
+import { useRouter } from 'vue-router'
 import { ElFormItem,ElButton,ElInput } from 'element-plus'
 import { User ,Lock} from '@element-plus/icons-vue';
 import { reactive } from 'vue';
 
+const router = useRouter()
+const loginRef = ref()
 
 const loginParam = reactive({
     username:undefined,
@@ -28,6 +32,21 @@ const loginRules=reactive({
     username:[{required:true,message:"账号不能为空",trigger:'blur'}],
     password:[{required:true,message:"密码不能为空",trigger:'blur'}]
 })
+
+const submit = (loginRef)=> {
+    if(!loginRef) {
+        return false
+    }
+    loginRef.validate(async (validate)=> {
+        if(validate){
+            console.log('到这里了')
+            router.push('/home')
+        }else{
+            return false;
+        }
+        console.log('到这里了')
+    })
+}
 
 
 </script>
