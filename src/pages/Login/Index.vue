@@ -1,39 +1,36 @@
 <template>
-    <div :class="{ container: true, 'sign-up-model': vari }">
-      <div class="inner-left-container">
-          <div class="login-content">
-              <h1 style="color: white;">淡海水鱼管理养殖平台</h1>
-              <ElButton type="primary" @click="onClick" size="large">去注册</ElButton>
-          </div>
-          <img src="@/assets/login-bg.svg" class="image">
+  <div :class="{ container: true, 'sign-up-model': vari }">
+    <div class="inner-left-container">
+      <div class="login-content">
+        <h1 style="color: white">淡海水鱼管理养殖平台</h1>
+        <ElButton type="primary" @click="onClick" size="large">去注册</ElButton>
       </div>
-      <div class="inner-right-container">
-          <div class="register-content">
-              <h1 style="color: white;">淡海水鱼管理养殖平台</h1>
-              <ElButton type="primary" @click="onClick" size="large">去登录</ElButton>
-          </div>
-          <img src="@/assets/register-bg.svg" class="image">
+      <img src="@/assets/login-bg.svg" class="image" />
+    </div>
+    <div class="inner-right-container">
+      <div class="register-content">
+        <h1 style="color: white">淡海水鱼管理养殖平台</h1>
+        <ElButton type="primary" @click="onClick" size="large">去登录</ElButton>
       </div>
-      <div class="inner-sign-up-container">
-          <login :class="{ 'sign-up-model': vari }"></login>
-          <register :class="{ 'sign-up-model': vari }"></register>
-      </div>
+      <img src="@/assets/register-bg.svg" class="image" />
+    </div>
+    <div class="inner-sign-up-container">
+      <login :class="{ 'sign-up-model': vari }"></login>
+      <register :class="{ 'sign-up-model': vari }"></register>
+    </div>
   </div>
 </template>
 
-
 <script setup>
-import { ElButton } from 'element-plus'
-import { ref } from 'vue'
+import { ElButton } from 'element-plus';
+import { ref } from 'vue';
 import login from './components/login.vue';
-import register from './components/register.vue'
+import register from './components/register.vue';
 const onClick = () => {
-  vari.value = !vari.value
-}
-let vari = ref(false)
-
+  vari.value = !vari.value;
+};
+let vari = ref(false);
 </script>
-
 
 <style lang="scss" scoped>
 .container {
@@ -46,7 +43,7 @@ let vari = ref(false)
   flex-direction: row;
 }
 .container::before {
-  content: "";
+  content: '';
   width: 2000px;
   height: 2000px;
   background-color: rgb(160, 209, 35);
@@ -69,7 +66,6 @@ let vari = ref(false)
   /* 上边|右边|下边|左边 */
   padding: 3rem 10% 2rem 10%;
   pointer-events: all;
-
 }
 .inner-right-container {
   width: 0;
@@ -94,7 +90,6 @@ let vari = ref(false)
   transform: translateX(0px);
   transition: 1s ease-in-out;
   transition-delay: 0.5s;
-
 }
 .image {
   width: 100%;
