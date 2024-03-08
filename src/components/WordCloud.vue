@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div>【关键词条】</div>
+		<div>【水产新闻热点追踪】</div>
 		<div ref="target" class="w-full h-full"></div>
 	</div>
 </template>
@@ -67,7 +67,12 @@ const renderChart = () => {
 					}
 				},
 				// 数据
-				data: props.data.datas
+				data: ['大黄鱼', '鲈鱼', '石斑鱼', '草鱼', '鲤鱼', '鲫鱼'].map((item) => {
+					return {
+						name: item,
+						value: Math.random()
+					}
+				})
 			}
 		]
 	}

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div>【大区异常处理】</div>
+		<div>【水产池塘异常情况处理】</div>
 		<div ref="target" class="w-full h-full"></div>
 	</div>
 </template>
@@ -116,7 +116,7 @@ const renderChart = () => {
 			top: '14%',
 			left: '60%',
 			// 展示数据
-			data: props.data.abnormals.map((item) => item.name),
+			data: ['池塘1', '池塘2', '池塘3', '池塘4', '池塘5', '池塘6'],
 			// 总宽度（一列）
 			width: -5,
 			// 每个色块的宽

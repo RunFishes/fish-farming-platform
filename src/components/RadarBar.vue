@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<div>【云端报警风险】</div>
+		<p style="font-size: xx-small;">监测当前环境鱼类生存情况，风险数值越高代表生存情况越差，高于80自动触发报警</p>
 		<div ref="target" class="w-full h-full"></div>
 	</div>
 </template>
@@ -57,8 +58,8 @@ const renderChart = () => {
 				}
 			},
 			// 指示器文字
-			indicator: props.data.risks.map((item) => ({
-				name: item.name,
+			indicator: ['大黄鱼', '鲈鱼', '石斑鱼', '草鱼', '鲤鱼', '鲫鱼'].map((item) => ({
+				name: item,
 				max: 100
 			})),
 			// 不展示拆分区域

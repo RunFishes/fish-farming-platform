@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div>【大区数据信息】</div>
+		<div>【水产产出信息】</div>
 		<div ref="target" class="w-full h-full"></div>
 	</div>
 </template>
@@ -47,7 +47,7 @@ const renderChart = () => {
 		yAxis: {
 			type: 'category',
 			// 根据根据服务端数据筛选
-			data: props.data.regions.map((item) => item.name),
+			data: ['大黄鱼', '鲈鱼', '石斑鱼', '草鱼', '鲤鱼', '鲫鱼'],
 			// 反向展示
 			inverse: true,
 			// 不展示轴线

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div>【服务资源占用比】</div>
+		<div>【水产养殖总值占用比】</div>
 		<div ref="target" class="w-full h-full"></div>
 	</div>
 </template>
@@ -29,7 +29,7 @@ const renderChart = () => {
 		xAxis: {
 			type: 'category',
 			// 根据根据服务端数据筛选
-			data: props.data.servers.map((item) => item.name),
+			data: ['大黄鱼', '鲈鱼', '石斑鱼', '草鱼', '鲤鱼', '鲫鱼'],
 			// 文字色值
 			axisLabel: {
 				color: '#9EB1C8'
