@@ -3,14 +3,28 @@
     <div class="inner-left-container">
       <div class="login-content">
         <h1 style="color: white">淡海水鱼管理养殖平台</h1>
-        <ElButton type="primary" @click="onClick" size="large">去注册</ElButton>
+        <ElButton
+          type="primary"
+          style="background-color: skyblue"
+          @click="onClick"
+          size="large"
+        >
+          去注册
+        </ElButton>
       </div>
       <img src="@/assets/login-bg.svg" class="image" />
     </div>
     <div class="inner-right-container">
       <div class="register-content">
         <h1 style="color: white">淡海水鱼管理养殖平台</h1>
-        <ElButton type="primary" @click="onClick" size="large">去登录</ElButton>
+        <ElButton
+          type="primary"
+          style="background-color: skyblue"
+          @click="onClick"
+          size="large"
+        >
+          去登录
+        </ElButton>
       </div>
       <img src="@/assets/register-bg.svg" class="image" />
     </div>

@@ -40,7 +40,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { ElFormItem, ElButton, ElInput } from 'element-plus';
+import { ElFormItem, ElButton, ElInput, ElMessage } from 'element-plus';
 import { User, Lock } from '@element-plus/icons-vue';
 import { reactive } from 'vue';
 
@@ -63,13 +63,28 @@ const submit = (loginRef) => {
   }
   loginRef.validate(async (validate) => {
     if (validate) {
-      console.log('到这里了');
-      router.push('/home');
+      const isRight = await cetificate({
+        username: loginParam.username,
+        password: loginParam.password,
+      });
+      if (isRight) {
+        router.push('/home');
+      } else {
+        ElMessage({
+          type: 'error',
+          messae: '账号密码错误',
+        });
+      }
     } else {
       return false;
     }
     console.log('到这里了');
   });
+};
+
+const cetificate = (params) => {
+  console.log(params);
+  return params;
 };
 </script>
 
