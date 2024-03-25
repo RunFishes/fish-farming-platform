@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-import Head from '../components/Head.vue';
-import CommonTable from '../../../components/CommonTable.vue';
+import Head from '../../components/Head.vue';
+import CommonTable from '@/components/CommonTable.vue';
 const formList = [
   {
     label: '鱼的种类',
@@ -83,9 +83,9 @@ const formList = [
     ],
   },
   {
-    label: '客户',
+    label: '购入商',
     key: 'customer',
-    placeholder: '请输入客户名称',
+    placeholder: '请输入购入商名称',
     width: 160,
   },
   {
@@ -134,7 +134,7 @@ const columns = [
     key: 'fishPrice',
   },
   {
-    label: '客户',
+    label: '购入商',
     key: 'customer',
   },
   {
@@ -211,9 +211,9 @@ const increaseFormList = [
     ],
   },
   {
-    label: '客户',
+    label: '购入商',
     key: 'customer',
-    placeholder: '请输入客户名称',
+    placeholder: '请输入购入商名称',
   },
   {
     label: '仓库',

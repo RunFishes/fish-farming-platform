@@ -51,8 +51,11 @@ import { getVisualization } from '../../api/visualization.js';
 const data = ref(null);
 
 const loadData = async () => {
-  data.value = await getVisualization();
-  console.log(data.value);
+  try {
+    data.value = await getVisualization();
+  } catch (e) {
+    console.log(e);
+  }
 };
 loadData();
 

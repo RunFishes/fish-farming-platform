@@ -2,6 +2,28 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 
 export const menuList = [
   {
+    name: '池塘-仓库-鱼类中央管理',
+    icon: ElementPlusIconsVue.Tools,
+    index: 'all',
+    children: [
+      {
+        name: '鱼类管理',
+        icon: ElementPlusIconsVue.Coin,
+        index: 'fish',
+      },
+      {
+        name: '池塘管理',
+        icon: ElementPlusIconsVue.Umbrella,
+        index: 'pond',
+      },
+      {
+        name: '仓库管理',
+        icon: ElementPlusIconsVue.PriceTag,
+        index: 'warehouse',
+      },
+    ],
+  },
+  {
     name: '鱼苗管理模块',
     icon: ElementPlusIconsVue.Paperclip,
     index: 'fishFry',
@@ -23,28 +45,28 @@ export const menuList = [
       },
     ],
   },
-  {
-    name: '水质监测模块',
-    icon: ElementPlusIconsVue.Postcard,
-    index: 'water',
-    children: [
-      {
-        name: '水质监测数据采集',
-        icon: ElementPlusIconsVue.Collection,
-        index: 'waterCollection',
-      },
-      {
-        name: '水质指标分析与展示',
-        icon: ElementPlusIconsVue.DataAnalysis,
-        index: 'waterIndicate',
-      },
-      {
-        name: '水质异常报警',
-        icon: ElementPlusIconsVue.BellFilled,
-        index: 'waterAlarm',
-      },
-    ],
-  },
+  // {
+  //   name: '水质监测模块',
+  //   icon: ElementPlusIconsVue.Postcard,
+  //   index: 'water',
+  //   children: [
+  //     {
+  //       name: '水质监测数据采集',
+  //       icon: ElementPlusIconsVue.Collection,
+  //       index: 'waterCollection',
+  //     },
+  //     {
+  //       name: '水质指标分析与展示',
+  //       icon: ElementPlusIconsVue.DataAnalysis,
+  //       index: 'waterIndicate',
+  //     },
+  //     {
+  //       name: '水质异常报警',
+  //       icon: ElementPlusIconsVue.BellFilled,
+  //       index: 'waterAlarm',
+  //     },
+  //   ],
+  // },
   {
     name: '饲料管理模块',
     icon: ElementPlusIconsVue.HotWater,

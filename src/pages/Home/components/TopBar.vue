@@ -11,11 +11,30 @@
         <p>淡海水养殖管理平台</p>
       </div>
       <div class="user">
-        <img
-          style="width: 30px; height: 30px; border-radius: 50%; cursor: pointer"
-          src="../../../assets/imgs/user.jpg"
-          alt="user"
-        />
+        <ElDropdown>
+          <img
+            style="
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              cursor: pointer;
+            "
+            src="../../../assets/imgs/user.jpg"
+            alt="user"
+          />
+          <template #dropdown>
+            <el-dropdown-menu
+              style="display: flex; flex-direction: column; gap: 12px"
+            >
+              <el-dropdown-item class="dropItem" @click="goLogin">
+                切换账号
+              </el-dropdown-item>
+              <el-dropdown-item class="dropItem" @click="goLogin">
+                注销
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </ElDropdown>
         <p>欢迎来到淡海水鱼养殖平台</p>
       </div>
     </div>
@@ -24,7 +43,14 @@
 </template>
 
 <script setup>
-import { ElAffix, ElDivider } from 'element-plus';
+import { ElAffix, ElDivider, ElDropdown } from 'element-plus';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const goLogin = () => {
+  router.push('/login');
+};
 console.log('2333');
 </script>
 
@@ -53,5 +79,17 @@ console.log('2333');
       color: white;
     }
   }
+}
+
+.dropItem {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 4px 12px;
+  text-align: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+.dropItem:hover {
+  background-color: rgb(168, 168, 168);
 }
 </style>

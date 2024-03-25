@@ -31,6 +31,28 @@
         size="large"
       ></ElInput>
     </ElFormItem>
+    <ElFormItem prop="emailCode">
+      <ElInput
+        placeholder="请输入邮箱验证码"
+        :prefix-icon="Crop"
+        v-model="registerParam.emailCode"
+        size="large"
+      >
+        <template #append>
+          <ElButton
+            type="primary"
+            :disabled="emailCodeButton.disabled"
+            @click="sendEmailCode(registerRef)"
+          >
+            {{
+              emailCodeButton.time === 0
+                ? '发送验证码'
+                : `${emailCodeButton.time}秒后重新发送`
+            }}
+          </ElButton>
+        </template>
+      </ElInput>
+    </ElFormItem>
     <ElFormItem>
       <ElButton
         type="primary"
@@ -47,28 +69,55 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { User, Lock, Message } from '@element-plus/icons-vue';
+import { User, Lock, Message, Crop } from '@element-plus/icons-vue';
 import { ElForm, ElFormItem, ElButton, ElInput } from 'element-plus';
+import { post } from '../../../config/http.config';
 
 const registerParam = reactive({
   username: '',
   password: '',
   email: '',
+  emailCode: '',
 });
 const registerRef = ref();
 const registerRules = reactive({
-  username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
+  username: [
+    { required: true, message: '账号不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: '密码是9~15位',
+      min: 9,
+      max: 15,
+      trigger: 'blur',
+    },
+  ],
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
     {
       required: true,
       message: '密码是6~20位',
-      min: 6,
+      min: 9,
       max: 20,
       trigger: 'blur',
     },
   ],
-  email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }],
+  email: [
+    { required: true, message: '邮箱不能为空', trigger: 'blur' },
+    {
+      pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      message: '请输入有效的邮箱地址',
+      trigger: 'blur',
+    },
+  ],
+  emailCode: [
+    { required: true, message: '邮箱验证码不能为空', trigger: 'blur' },
+    {
+      min: 4,
+      max: 4,
+      message: '请输入有效的邮箱验证码',
+      trigger: 'blur',
+    },
+  ],
 });
 const submit = (formEl) => {
   if (!formEl) {
@@ -76,7 +125,49 @@ const submit = (formEl) => {
   }
   formEl.validate(async (validate) => {
     if (validate) {
-      console.log('开始做注册的逻辑');
+      console.log({
+        username: registerParam.username,
+        email: registerParam.email,
+        password: registerParam.password,
+        emailCode: registerParam.emailCode,
+      });
+      const res = await post('REGISTER', {
+        username: registerParam.username,
+        email: registerParam.email,
+        password: registerParam.password,
+        emailCode: registerParam.emailCode,
+      });
+      console.log(res);
+    } else {
+      return false;
+    }
+  });
+};
+
+const emailCodeButton = ref({
+  time: 0,
+  disabled: false,
+});
+
+const sendEmailCode = (formEl) => {
+  if (!formEl) {
+    return;
+  }
+  formEl.validateField('email').then(async (validate) => {
+    if (validate) {
+      emailCodeButton.value.disabled = true;
+      emailCodeButton.value.time = 60;
+      const timer = setInterval(() => {
+        emailCodeButton.value.time--;
+        if (emailCodeButton.value.time === 0) {
+          clearInterval(timer);
+          emailCodeButton.value.disabled = false;
+        }
+      }, 1000);
+      const res = await post('SEND_EMAIL_CODE', {
+        email: registerParam.email,
+        emailCode: registerParam.emailCode,
+      });
     } else {
       return false;
     }

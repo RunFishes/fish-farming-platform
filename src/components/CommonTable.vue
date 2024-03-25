@@ -47,7 +47,11 @@
       <ElButton @click="increaseShow = true">导入数据</ElButton>
     </ElForm>
     <slot name="table">
-      <ElTable :data="state.data" style="width: 100%; margin-top: 20px">
+      <ElTable
+        v-loading="loading"
+        :data="state.data"
+        style="width: 100%; margin-top: 20px"
+      >
         <ElTableColumn
           :prop="column.key"
           v-for="column in props.tableColumn"
@@ -79,7 +83,7 @@
               <div v-if="item.type === 'select'">
                 <ElSelect
                   :placeholder="item.placeholder || '请选择'"
-                  v-model="formState[item.key]"
+                  v-model="increaseState[item.key]"
                   :multiple="item.isMutiple || false"
                   :style="{ width: `${item.width || 300}px` }"
                 >
@@ -94,7 +98,7 @@
               <div v-else-if="item.type === 'date'">
                 <ElDatePicker
                   :placeholder="item.placeholder || '请选择'"
-                  v-model="formState[item.key]"
+                  v-model="increaseState[item.key]"
                   :style="{ width: `${item.width || 300}px` }"
                   value-format="YYYY-MM-DD"
                 />
@@ -102,7 +106,7 @@
               <div v-else>
                 <ElInput
                   :placeholder="item.placeholder || '请输入'"
-                  v-model="formState[item.key]"
+                  v-model="increaseState[item.key]"
                   :style="{ width: `${item.width || 300}px` }"
                 />
               </div>
@@ -111,7 +115,7 @@
         </slot>
       </ElScrollbar>
       <template #footer>
-        <ElButton>取消</ElButton>
+        <ElButton @click="increaseShow = false">取消</ElButton>
         <ElButton style="background-color: rgb(64, 158, 255); color: white">
           确定
         </ElButton>
@@ -230,6 +234,8 @@ const state = ref({
   },
 });
 
+const loading = ref(false);
+
 const form = ref(null);
 const formState = ref({});
 //formState初始化
@@ -249,8 +255,12 @@ props.increaseFormList.forEach((item) => {
 const increaseShow = ref(false);
 
 const submit = async () => {
+  loading.value = true;
   const params = toRaw(formState.value || {});
   const res = await props.getData(params);
+  setTimeout(() => {
+    loading.value = false;
+  }, 300);
 };
 
 const increaseItem = async () => {

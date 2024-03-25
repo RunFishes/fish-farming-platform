@@ -43,6 +43,8 @@ import { useRouter } from 'vue-router';
 import { ElFormItem, ElButton, ElInput, ElMessage } from 'element-plus';
 import { User, Lock } from '@element-plus/icons-vue';
 import { reactive } from 'vue';
+import { post } from '../../../config/http.config';
+import storage from '../../../utils/storage';
 
 const router = useRouter();
 const loginRef = ref();
@@ -68,7 +70,15 @@ const submit = (loginRef) => {
         password: loginParam.password,
       });
       if (isRight) {
-        router.push('/home');
+        // router.push('/home');
+        const res = await post('LOGIN', {
+          username: loginParam.username,
+          password: loginParam.password,
+        });
+        if (res.token) {
+          storage.save('login', res.token);
+          router.push('/home');
+        }
       } else {
         ElMessage({
           type: 'error',
