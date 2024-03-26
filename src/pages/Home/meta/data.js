@@ -16,11 +16,11 @@ export const menuList = [
         icon: ElementPlusIconsVue.Umbrella,
         index: 'pond',
       },
-      {
-        name: '仓库管理',
-        icon: ElementPlusIconsVue.PriceTag,
-        index: 'warehouse',
-      },
+      // {
+      //   name: '仓库管理',
+      //   icon: ElementPlusIconsVue.PriceTag,
+      //   index: 'warehouse',
+      // },
     ],
   },
   {
@@ -33,11 +33,11 @@ export const menuList = [
         icon: ElementPlusIconsVue.ShoppingTrolley,
         index: 'fishProcurement',
       },
-      {
-        name: '鱼苗库存管理',
-        icon: ElementPlusIconsVue.Stamp,
-        index: 'fishManagement',
-      },
+      // {
+      //   name: '鱼苗库存管理',
+      //   icon: ElementPlusIconsVue.Stamp,
+      //   index: 'fishManagement',
+      // },
       {
         name: '鱼苗质量',
         icon: ElementPlusIconsVue.MagicStick,

@@ -68,7 +68,6 @@
     </slot>
     <ElDialog v-model="increaseShow" width="400" center>
       <ElScrollbar height="400">
-        <slot name="dialog">
           <ElForm
             ref="increaseForm"
             :model="increaseState"
@@ -103,6 +102,12 @@
                   value-format="YYYY-MM-DD"
                 />
               </div>
+              <div v-else-if="item.type==='selectAndInput'">
+                <SelectAndInput 
+                  :input-placeholder="item.inputPlaceholder"
+                  :selectPlaceholder="item.selectPlaceholder"
+                  v-model:list="increaseState[item.key]"/>
+              </div>
               <div v-else>
                 <ElInput
                   :placeholder="item.placeholder || '请输入'"
@@ -112,7 +117,6 @@
               </div>
             </ElFormItem>
           </ElForm>
-        </slot>
       </ElScrollbar>
       <template #footer>
         <ElButton @click="increaseShow = false">取消</ElButton>
@@ -127,6 +131,7 @@
 <script setup>
 import { ref, onMounted, toRaw } from 'vue';
 import { getDefaultValue } from '../utils/getDefaultValue';
+import SelectAndInput  from './SelectAndInput.vue'
 import {
   ElForm,
   ElFormItem,

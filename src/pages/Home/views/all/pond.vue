@@ -2,9 +2,9 @@
   <div class="body">
     <Head
       :bread-list="{
-        value: '鱼苗管理模块',
+        value: '中央管理模块',
         children: {
-          value: '鱼苗库存管理',
+          value: '池塘管理',
         },
       }"
     />
@@ -22,86 +22,33 @@ import Head from '../../components/Head.vue';
 import CommonTable from '@/components/CommonTable.vue';
 const formList = ref([
   {
-    label: '仓库',
-    key: 'warehouse',
-    type: 'select',
-    placeholder: '选择仓库',
-    options: [
-      {
-        label: '仓库1',
-        value: 'normal',
-      },
-      {
-        label: '仓库2',
-        value: 'large',
-      },
-      {
-        label: '仓库3',
-        value: 'small',
-      },
-    ],
-  },
-  {
-    label: '鱼的种类',
-    key: 'fishType',
-    type: 'select',
-    placeholder: '选择鱼的种类',
-    options: [
-      {
-        label: '大黄鱼',
-        value: 'yellowCroaker',
-      },
-      {
-        label: '鲈鱼',
-        value: 'perch',
-      },
-      {
-        label: '石斑鱼',
-        value: 'grouper',
-      },
-      {
-        label: '草鱼',
-        value: 'grassCarp',
-      },
-      {
-        label: '鲤鱼',
-        value: 'carp',
-      },
-      {
-        label: '鲫鱼',
-        value: 'crucianCarp',
-      },
-    ],
-  },
-  {
     label: '池塘',
     key: 'pondId',
     type: 'select',
     placeholder: '请选择池塘',
     options: [],
   },
+  {
+    label: '鱼的种类',
+    key: 'fishType',
+    type: 'select',
+    placeholder: '选择鱼的种类',
+    options: [],
+  },
 ]);
 
 const columns = ref([
   {
-    label: '仓库',
-    key: 'warehouse',
+    label: '池塘',
+    key: 'pondId',
   },
   {
     label: '鱼的种类',
     key: 'fishType',
   },
   {
-    label: '池塘',
-    key: 'pondId',
-  },
-  {
     label: '放养数量',
     value: 'freeQuantity',
-  },
-  {
-    label: '仓库剩余鱼数量',
-    value: 'remainQuantity',
   },
   {
     label: '操作员',
@@ -109,7 +56,29 @@ const columns = ref([
   },
 ]);
 
-const increaseFormList = [];
+const increaseFormList = [
+  {
+    key:'pondId',
+    label:'池塘',
+    type:'select',
+    placeholder:'请选择池塘',
+    options:[]
+  },
+  {
+    key:'fishAll',
+    label:'鱼类数量',
+    inputPlaceholder:'请输入鱼类数量',
+    selectPlaceholder:'请输入鱼类',
+    type:'selectAndInput',
+    defaultValue:[
+      {
+        label: '海鱼',
+        selectValue: '1',
+        inputValue: 222,
+      },
+    ]
+  }
+];
 </script>
 
 <style lang="scss" scoped>

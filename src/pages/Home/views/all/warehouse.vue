@@ -2,9 +2,9 @@
   <div class="body">
     <Head
       :bread-list="{
-        value: '鱼苗管理模块',
+        value: '中央管理模块',
         children: {
-          value: '鱼苗库存管理',
+          value: '仓库管理',
         },
       }"
     />
@@ -26,55 +26,17 @@ const formList = ref([
     key: 'warehouse',
     type: 'select',
     placeholder: '选择仓库',
-    options: [
-      {
-        label: '仓库1',
-        value: 'normal',
-      },
-      {
-        label: '仓库2',
-        value: 'large',
-      },
-      {
-        label: '仓库3',
-        value: 'small',
-      },
-    ],
+    options: [],
   },
   {
     label: '鱼的种类',
     key: 'fishType',
     type: 'select',
     placeholder: '选择鱼的种类',
-    options: [
-      {
-        label: '大黄鱼',
-        value: 'yellowCroaker',
-      },
-      {
-        label: '鲈鱼',
-        value: 'perch',
-      },
-      {
-        label: '石斑鱼',
-        value: 'grouper',
-      },
-      {
-        label: '草鱼',
-        value: 'grassCarp',
-      },
-      {
-        label: '鲤鱼',
-        value: 'carp',
-      },
-      {
-        label: '鲫鱼',
-        value: 'crucianCarp',
-      },
-    ],
+    options: [],
   },
   {
-    label: '池塘',
+    label: '放养池塘',
     key: 'pondId',
     type: 'select',
     placeholder: '请选择池塘',
@@ -92,7 +54,7 @@ const columns = ref([
     key: 'fishType',
   },
   {
-    label: '池塘',
+    label: '放养池塘',
     key: 'pondId',
   },
   {

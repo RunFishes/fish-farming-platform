@@ -153,32 +153,7 @@ const increaseFormList = [
     key: 'fishType',
     type: 'select',
     placeholder: '选择鱼的种类',
-    options: [
-      {
-        label: '大黄鱼',
-        value: 'yellowCroaker',
-      },
-      {
-        label: '鲈鱼',
-        value: 'perch',
-      },
-      {
-        label: '石斑鱼',
-        value: 'grouper',
-      },
-      {
-        label: '草鱼',
-        value: 'grassCarp',
-      },
-      {
-        label: '鲤鱼',
-        value: 'carp',
-      },
-      {
-        label: '鲫鱼',
-        value: 'crucianCarp',
-      },
-    ],
+    options: [],
   },
   {
     label: '鱼苗交付时间',
