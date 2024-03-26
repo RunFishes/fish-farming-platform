@@ -44,8 +44,8 @@
           </el-menu-item>
         </el-sub-menu>
         <el-menu-item index="/visualization">
-            <el-icon><DataBoard /></el-icon>
-            <template #title>大数据看板</template>
+          <el-icon><DataBoard /></el-icon>
+          <template #title>大数据看板</template>
         </el-menu-item>
       </el-menu>
       <router-view></router-view>
@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { ElMenu, ElMenuItem, ElIcon, ElSubMenu } from 'element-plus';
 import TopBar from './components/TopBar.vue';

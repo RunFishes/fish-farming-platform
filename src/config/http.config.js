@@ -6,29 +6,19 @@ const baseURL = {
 };
 
 const httpList = {
-  LOGIN: 'login',
-  REGISTER: 'register',
-  SEND_EMAIL_CODE: 'send/emailCode',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  SEND_EMAIL_CODE: '/send/emailCode',
+  POND: '/pond',
 };
 
 export const post = async (url, params = {}) => {
-  let base = '';
-  if (import.meta.env.DEV) {
-    base = baseURL.dev;
-  } else {
-    base = baseURL.prd;
-  }
-  return service.post(httpList[url] ? base + httpList[url] : '', params);
+  console.log(httpList[url]);
+  return service.post(httpList[url] || '', params);
 };
 
 export const get = async (url, params) => {
-  let base = '';
-  if (import.meta.env.DEV) {
-    base = baseURL.dev;
-  } else {
-    base = baseURL.prd;
-  }
-  return service.get(base + httpList[url] || '', {
+  return service.get(httpList[url] || '', {
     ...params,
   });
 };

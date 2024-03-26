@@ -68,55 +68,52 @@
     </slot>
     <ElDialog v-model="increaseShow" width="400" center>
       <ElScrollbar height="400">
-          <ElForm
-            ref="increaseForm"
-            :model="increaseState"
-            label-position="top"
+        <ElForm ref="increaseForm" :model="increaseState" label-position="top">
+          <ElFormItem
+            v-for="item in props.increaseFormList"
+            :key="item.key"
+            :label="item.label + ':' || ''"
+            :prop="item.key"
           >
-            <ElFormItem
-              v-for="item in props.increaseFormList"
-              :key="item.key"
-              :label="item.label + ':' || ''"
-              :prop="item.key"
-            >
-              <div v-if="item.type === 'select'">
-                <ElSelect
-                  :placeholder="item.placeholder || '请选择'"
-                  v-model="increaseState[item.key]"
-                  :multiple="item.isMutiple || false"
-                  :style="{ width: `${item.width || 300}px` }"
-                >
-                  <ElOption
-                    v-for="opt in item.options || []"
-                    :key="opt.value"
-                    :label="opt.label"
-                    :value="opt.value"
-                  />
-                </ElSelect>
-              </div>
-              <div v-else-if="item.type === 'date'">
-                <ElDatePicker
-                  :placeholder="item.placeholder || '请选择'"
-                  v-model="increaseState[item.key]"
-                  :style="{ width: `${item.width || 300}px` }"
-                  value-format="YYYY-MM-DD"
+            <div v-if="item.type === 'select'">
+              <ElSelect
+                :placeholder="item.placeholder || '请选择'"
+                v-model="increaseState[item.key]"
+                :multiple="item.isMutiple || false"
+                :style="{ width: `${item.width || 300}px` }"
+              >
+                <ElOption
+                  v-for="opt in item.options || []"
+                  :key="opt.value"
+                  :label="opt.label"
+                  :value="opt.value"
                 />
-              </div>
-              <div v-else-if="item.type==='selectAndInput'">
-                <SelectAndInput 
-                  :input-placeholder="item.inputPlaceholder"
-                  :selectPlaceholder="item.selectPlaceholder"
-                  v-model:list="increaseState[item.key]"/>
-              </div>
-              <div v-else>
-                <ElInput
-                  :placeholder="item.placeholder || '请输入'"
-                  v-model="increaseState[item.key]"
-                  :style="{ width: `${item.width || 300}px` }"
-                />
-              </div>
-            </ElFormItem>
-          </ElForm>
+              </ElSelect>
+            </div>
+            <div v-else-if="item.type === 'date'">
+              <ElDatePicker
+                :placeholder="item.placeholder || '请选择'"
+                v-model="increaseState[item.key]"
+                :style="{ width: `${item.width || 300}px` }"
+                value-format="YYYY-MM-DD"
+              />
+            </div>
+            <div v-else-if="item.type === 'selectAndInput'">
+              <SelectAndInput
+                :input-placeholder="item.inputPlaceholder"
+                :selectPlaceholder="item.selectPlaceholder"
+                v-model:list="increaseState[item.key]"
+              />
+            </div>
+            <div v-else>
+              <ElInput
+                :placeholder="item.placeholder || '请输入'"
+                v-model="increaseState[item.key]"
+                :style="{ width: `${item.width || 300}px` }"
+              />
+            </div>
+          </ElFormItem>
+        </ElForm>
       </ElScrollbar>
       <template #footer>
         <ElButton @click="increaseShow = false">取消</ElButton>
@@ -131,7 +128,7 @@
 <script setup>
 import { ref, onMounted, toRaw } from 'vue';
 import { getDefaultValue } from '../utils/getDefaultValue';
-import SelectAndInput  from './SelectAndInput.vue'
+import SelectAndInput from './SelectAndInput.vue';
 import {
   ElForm,
   ElFormItem,
@@ -263,6 +260,7 @@ const submit = async () => {
   loading.value = true;
   const params = toRaw(formState.value || {});
   const res = await props.getData(params);
+  console.log(res);
   setTimeout(() => {
     loading.value = false;
   }, 300);

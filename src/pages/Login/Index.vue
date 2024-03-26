@@ -37,13 +37,19 @@
 
 <script setup>
 import { ElButton } from 'element-plus';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import login from './components/login.vue';
 import register from './components/register.vue';
+import storage from '@/utils/storage';
 const onClick = () => {
   vari.value = !vari.value;
 };
 let vari = ref(false);
+
+onMounted(() => {
+  //清除token
+  storage.remove('login');
+});
 </script>
 
 <style lang="scss" scoped>

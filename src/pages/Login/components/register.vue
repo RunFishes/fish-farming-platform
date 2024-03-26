@@ -168,6 +168,7 @@ const sendEmailCode = (formEl) => {
         email: registerParam.email,
         emailCode: registerParam.emailCode,
       });
+      window.location.reload();
     } else {
       return false;
     }
