@@ -53,11 +53,11 @@ const columns = ref([
   },
   {
     label: '引入时间',
-    value: 'leadTime',
+    key: 'leadTime',
   },
   {
     label: '排除时间',
-    value: 'excludeTime',
+    key: 'excludeTime',
   },
   {
     label: '操作员',

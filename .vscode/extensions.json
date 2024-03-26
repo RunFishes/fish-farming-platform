@@ -1,3 +1,11 @@
 {
-  "recommendations": ["Vue.volar", "Vue.vscode-typescript-vue-plugin"]
+  // 必配
+  "eslint.nodePath": "/Users/chenzejian/.nvm/versions/node/v14.10.0/lib/node_modules/@xhs/formula-cli",
+  "eslint.options": {
+      "resolvePluginsRelativeTo": "/Users/chenzejian/.nvm/versions/node/v14.10.0/lib/node_modules/@xhs/formula-cli",
+  },
+  // 推荐，保存文件时自动修复 lint error
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+  },
 }

@@ -60,9 +60,7 @@ const increaseFormList = [
   {
     key:'pondId',
     label:'池塘',
-    type:'select',
-    placeholder:'请选择池塘',
-    options:[]
+    placeholder:'请输入新增池塘名',
   },
   {
     key:'fishAll',

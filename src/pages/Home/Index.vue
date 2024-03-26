@@ -44,10 +44,8 @@
           </el-menu-item>
         </el-sub-menu>
         <el-menu-item index="/visualization">
-          <template #title>
             <el-icon><DataBoard /></el-icon>
-            <span>大数据看板</span>
-          </template>
+            <template #title>大数据看板</template>
         </el-menu-item>
       </el-menu>
       <router-view></router-view>

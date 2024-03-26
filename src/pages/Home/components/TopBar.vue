@@ -86,7 +86,7 @@ console.log('2333');
   line-height: 20px;
   padding: 4px 12px;
   text-align: center;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
 }
 .dropItem:hover {

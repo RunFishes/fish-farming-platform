@@ -25,22 +25,16 @@ const routes = [
     children: [
       //总模块
       {
-        //鱼苗采购
+        //鱼管理
         path: 'fish',
         name: 'fish',
         component: () => import('../pages/Home/views/all/fish.vue'),
       },
       {
-        //鱼苗库存管理
+        //池塘管理
         path: 'pond',
         name: 'pond',
         component: () => import('../pages/Home/views/all/pond.vue'),
-      },
-      {
-        //鱼苗质量
-        path: 'warehouse',
-        name: 'warehouse',
-        component: () => import('../pages/Home/views/all/warehouse.vue'),
       },
       {
         //鱼苗采购
@@ -48,13 +42,6 @@ const routes = [
         name: 'fishProcurement',
         component: () =>
           import('../pages/Home/views/fishFry/fishProcurement.vue'),
-      },
-      {
-        //鱼苗库存管理
-        path: 'fishManagement',
-        name: 'fishManagement',
-        component: () =>
-          import('../pages/Home/views/fishFry/fishManagement.vue'),
       },
       {
         //鱼苗质量

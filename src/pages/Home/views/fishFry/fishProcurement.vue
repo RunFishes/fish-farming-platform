@@ -89,26 +89,6 @@ const formList = [
     width: 160,
   },
   {
-    label: '仓库',
-    key: 'warehouse',
-    type: 'select',
-    placeholder: '选择仓库',
-    options: [
-      {
-        label: '仓库1',
-        value: 'normal',
-      },
-      {
-        label: '仓库2',
-        value: 'large',
-      },
-      {
-        label: '仓库3',
-        value: 'small',
-      },
-    ],
-  },
-  {
     label: '操作员',
     key: 'operation',
     type: 'input',
@@ -136,10 +116,6 @@ const columns = [
   {
     label: '购入商',
     key: 'customer',
-  },
-  {
-    label: '仓库',
-    key: 'warehouse',
   },
   {
     label: '操作员',
