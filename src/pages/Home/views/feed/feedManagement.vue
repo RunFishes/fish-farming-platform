@@ -8,7 +8,11 @@
         },
       }"
     />
-    <CommonTable ></CommonTable>
+    <CommonTable
+      :table-column="columns"
+      :form-list="formList"
+      :increase-form-list="increaseFormList"
+    />
   </div>
 </template>
 
@@ -16,16 +20,112 @@
 import { ref } from 'vue';
 import Head from '../../components/Head.vue';
 import CommonTable from '@/components/CommonTable.vue';
-const formList = ref([])
-const columns = ref([])
-const increaseFormList = ref([])
+const formList = ref([
+  {
+    label: '饲料名称',
+    key: 'feedName',
+    placeholder: '请输入饲料名称',
+  },
+  {
+    label: '规格型号',
+    key: 'feedModel',
+    placeholder: '请输入规格型号',
+  },
+  {
+    label: '供应商',
+    key: 'supplier',
+    placeholder: '请输入供应商',
+  },
+]);
+const columns = ref([
+  {
+    label: '饲料名称',
+    key: 'feedName',
+  },
+  {
+    label: '规格型号',
+    key: 'feedModel',
+  },
+  {
+    label: '生产日期',
+    key: 'productTime',
+  },
+  {
+    label: '保质期',
+    key: 'keepTime',
+  },
+  {
+    label: '供应商',
+    key: 'supplier',
+  },
+  {
+    label: '采购数量/kg',
+    key: 'quantity',
+  },
+  {
+    label: '入库日期',
+    key: 'leadTime',
+  },
+  {
+    label: '剩余库存',
+    key: 'inventory',
+  },
+  {
+    label: '操作员',
+    key: 'operation',
+  },
+]);
+const increaseFormList = ref([
+  {
+    label: '饲料名称',
+    key: 'feedName',
+    placeholder: '请输入饲料名称',
+  },
+  {
+    label: '规格型号',
+    key: 'feedModel',
+    placeholder: '请输入规格型号',
+  },
+  {
+    label: '生产日期',
+    key: 'productTime',
+    type: 'date',
+    placeholder: '请输入生产日期',
+  },
+  {
+    label: '保质期/月',
+    key: 'keepTime',
+    placeholder: '请输入保质期时间',
+  },
+  {
+    label: '供应商',
+    key: 'supplier',
+    placeholder: '请输入供应商',
+  },
+  {
+    label: '采购数量/kg',
+    key: 'quantity',
+    placeholder: '请输入采购数量',
+  },
+  {
+    label: '入库日期',
+    key: 'leadTime',
+    type: 'select',
+    placeholder: '请输入入库日期',
+  },
+  {
+    label: '剩余库存/kg',
+    key: 'inventory',
+    placeholder: '请输入库存数量',
+  },
+]);
 
 console.log('我在呢');
 </script>
 
 <style lang="scss" scoped>
 .body {
-    width: 100%;
-    flex: 1;
+  width: 100%;
+  flex: 1;
 }
 </style>
