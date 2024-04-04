@@ -1,4 +1,4 @@
-import request from '@/utils/request.js';
+import request from '@/utils/request2.js';
 
 /**
  * 数据可视化

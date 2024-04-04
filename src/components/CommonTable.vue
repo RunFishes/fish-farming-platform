@@ -1,6 +1,11 @@
 <template>
   <div class="commonForm">
-    <ElForm ref="form" class="formBody" :model="formState">
+    <ElForm
+      ref="form"
+      class="formBody"
+      :model="formState"
+      @submit.prevent="submit"
+    >
       <ElFormItem
         v-for="item in props.formList"
         :key="item.key"
@@ -30,6 +35,14 @@
             value-format="YYYY-MM-DD"
           />
         </div>
+        <div v-else-if="item.type === 'number'">
+          <ElInputNumber
+            :placeholder="item.placeholder || '请选择'"
+            v-model="formState[item.key]"
+            :style="{ width: `${item.width || 180}px` }"
+            :max="item.max || 100000000"
+          ></ElInputNumber>
+        </div>
         <div v-else>
           <ElInput
             :placeholder="item.placeholder || '请输入'"
@@ -44,7 +57,9 @@
       >
         查询
       </ElButton>
-      <ElButton @click="increaseShow = true">导入数据</ElButton>
+      <ElButton @click="increaseRowData" v-if="props.isAddShow">
+        导入数据
+      </ElButton>
     </ElForm>
     <slot name="table">
       <ElTable
@@ -57,16 +72,53 @@
           v-for="column in props.tableColumn"
           :min-width="column.width || '120'"
           :label="column.label"
-        />
+          #default="scope"
+        >
+          <p v-if="!Array.isArray(scope.row[column.key])">
+            {{
+              column?.customRender
+                ? column.customRender(scope.row(column.key))
+                : scope.row[column.key]
+            }}
+          </p>
+          <div v-else>
+            <p v-for="ele in scope.row[column.key]" :key="ele">
+              {{ column?.customRender ? column.customRender(ele) : ele }}
+            </p>
+          </div>
+        </ElTableColumn>
         <ElTableColumn label="操作">
           <template #default="scope">
-            <ElButton type="link" @click="increaseItem(scope)">修改</ElButton>
-            <ElButton type="link" @click="deleteItem(scope)">删除</ElButton>
+            <ElButton
+              link
+              type="success"
+              @click="updateRowData(scope.row)"
+              v-if="props.isUpdateShow"
+            >
+              修改
+            </ElButton>
+            <ElButton
+              link
+              type="danger"
+              @click="deleteItem(scope.row)"
+              v-if="props.isDeleteShow"
+            >
+              删除
+            </ElButton>
           </template>
         </ElTableColumn>
       </ElTable>
+      <ElPagination
+        style="margin-top: 12px"
+        @change="submit"
+        :page-sizes="[10, 20, 30, 50]"
+        :total="state.page.total"
+        v-model:current-page="state.page.current"
+        layout="jumper, prev, pager, next,sizes,total"
+        v-model:page-size="state.page.pageSize"
+      />
     </slot>
-    <ElDialog v-model="increaseShow" width="400" center>
+    <ElDialog destroy-on-close v-model="increaseShow" width="400" center>
       <ElScrollbar height="400">
         <ElForm ref="increaseForm" :model="increaseState" label-position="top">
           <ElFormItem
@@ -77,6 +129,11 @@
           >
             <div v-if="item.type === 'select'">
               <ElSelect
+                :disabled="
+                  increasseType === 'add'
+                    ? item?.addDisabled || false
+                    : item.updateDisabled || false
+                "
                 :placeholder="item.placeholder || '请选择'"
                 v-model="increaseState[item.key]"
                 :multiple="item.isMutiple || false"
@@ -92,6 +149,11 @@
             </div>
             <div v-else-if="item.type === 'date'">
               <ElDatePicker
+                :disabled="
+                  increasseType === 'add'
+                    ? item?.addDisabled || false
+                    : item.updateDisabled || false
+                "
                 :placeholder="item.placeholder || '请选择'"
                 v-model="increaseState[item.key]"
                 :style="{ width: `${item.width || 300}px` }"
@@ -100,13 +162,33 @@
             </div>
             <div v-else-if="item.type === 'selectAndInput'">
               <SelectAndInput
-                :input-placeholder="item.inputPlaceholder"
-                :selectPlaceholder="item.selectPlaceholder"
+                :input-placeholder="item.inputPlaceholder || '请输入'"
+                :selectPlaceholder="item.selectPlaceholder || '请选择'"
+                :default-list="item.defaultList || []"
                 v-model:list="increaseState[item.key]"
+                :filter-list="item.filterList || []"
               />
+            </div>
+            <div v-else-if="item.type === 'number'">
+              <ElInputNumber
+                :disabled="
+                  increasseType === 'add'
+                    ? item?.addDisabled || false
+                    : item.updateDisabled || false
+                "
+                :placeholder="item.placeholder || '请选择'"
+                v-model="increaseState[item.key]"
+                :style="{ width: `${item.width || 180}px` }"
+                :max="item.max || 100000000"
+              ></ElInputNumber>
             </div>
             <div v-else>
               <ElInput
+                :disabled="
+                  increasseType === 'add'
+                    ? item?.addDisabled || false
+                    : item?.updateDisabled || false
+                "
                 :placeholder="item.placeholder || '请输入'"
                 v-model="increaseState[item.key]"
                 :style="{ width: `${item.width || 300}px` }"
@@ -117,7 +199,10 @@
       </ElScrollbar>
       <template #footer>
         <ElButton @click="increaseShow = false">取消</ElButton>
-        <ElButton style="background-color: rgb(64, 158, 255); color: white">
+        <ElButton
+          style="background-color: rgb(64, 158, 255); color: white"
+          @click="increaseItem"
+        >
           确定
         </ElButton>
       </template>
@@ -127,7 +212,7 @@
 
 <script setup>
 import { ref, onMounted, toRaw } from 'vue';
-import { getDefaultValue } from '../utils/getDefaultValue';
+import { getDefaultValue, copyValue } from '../utils/getDefaultValue';
 import SelectAndInput from './SelectAndInput.vue';
 import {
   ElForm,
@@ -141,6 +226,8 @@ import {
   ElDatePicker,
   ElDialog,
   ElScrollbar,
+  ElPagination,
+  ElInputNumber,
 } from 'element-plus';
 const props = defineProps({
   // {
@@ -165,6 +252,20 @@ const props = defineProps({
   tableColumn: {
     type: Array,
     default: [],
+  },
+  //控制添加按钮的显示
+  isAddShow: {
+    type: Boolean,
+    default: true,
+  },
+  //控制修改按钮的显示
+  isUpdateShow: {
+    type: Boolean,
+    default: true,
+  },
+  isDeleteShow: {
+    type: Boolean,
+    default: true,
   },
   //获取表格函数的接口函数
   // {
@@ -225,12 +326,25 @@ const props = defineProps({
         });
       }),
   },
+  //修改数据
+  updateData: {
+    type: Function,
+    default: async (params) =>
+      new Promise((res, rej) => {
+        console.log(params);
+        return res({
+          success: true,
+          code: 200,
+          message: '修改数据成功',
+        });
+      }),
+  },
 });
 
 const state = ref({
   data: [],
   page: {
-    pageSizes: 20,
+    pageSize: 10,
     total: 0,
     current: 1,
   },
@@ -243,36 +357,75 @@ const formState = ref({});
 //formState初始化
 props.formList.forEach((item) => {
   formState.value[item.key] =
-    item.defaultValue || getDefaultValue(item.formType);
+    copyValue(item.defaultValue) || getDefaultValue(item.formType);
 });
-
-const increaseForm = ref(null);
-const increaseState = ref({});
-//increaseState初始化
-props.increaseFormList.forEach((item) => {
-  increaseState.value[item.key] =
-    item.defaultValue || getDefaultValue(item.formType);
-});
-
-const increaseShow = ref(false);
 
 const submit = async () => {
   loading.value = true;
   const params = toRaw(formState.value || {});
-  const res = await props.getData(params);
-  console.log(res);
+
+  const res = await props.getData({
+    params,
+    page: state.value.page,
+  });
+  state.value.data = res.data || [];
+  state.value.page = res.page;
+  if (res) {
+    state.value = res;
+  }
+
   setTimeout(() => {
     loading.value = false;
   }, 300);
 };
 
-const increaseItem = async () => {
-  const params = toRaw(increaseForm.value || {});
-  const res = await props.increaseData(params);
+const increaseForm = ref(null);
+const increaseState = ref({});
+const increaseShow = ref(false);
+let increasseType = ref('add');
+
+//increaseState初始化
+props.increaseFormList.forEach((item) => {
+  increaseState.value[item.key] =
+    copyValue(item.defaultValue) || getDefaultValue(item.formType);
+  console.log('***', increaseState.value);
+});
+
+const updateRowData = (row) => {
+  increasseType.value = 'update';
+  Object.keys(row).forEach((item) => {
+    increaseState.value[item] = row[item];
+  });
+  increaseShow.value = true;
 };
 
-const deleteItem = async () => {
-  console.log('删除数据');
+const increaseRowData = () => {
+  increasseType.value = 'add';
+  //increaseState初始化
+  props.increaseFormList.forEach((item) => {
+    increaseState.value = {};
+    increaseState.value[item.key] =
+      copyValue(item.defaultValue) || getDefaultValue(item.formType);
+    console.log(increaseState.value);
+  });
+  increaseShow.value = true;
+};
+
+const increaseItem = async () => {
+  const params = toRaw(increaseState.value || {});
+  console.log(params);
+  if (increasseType.value === 'add') {
+    await props.increaseData(params);
+  } else {
+    await props.updateData(params);
+  }
+  increaseShow.value = false;
+  submit();
+};
+
+const deleteItem = async (row) => {
+  const res = await props.deleteData(row);
+  submit();
 };
 
 onMounted(() => {

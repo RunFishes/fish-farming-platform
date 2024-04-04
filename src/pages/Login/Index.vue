@@ -30,7 +30,10 @@
     </div>
     <div class="inner-sign-up-container">
       <login :class="{ 'sign-up-model': vari }"></login>
-      <register :class="{ 'sign-up-model': vari }"></register>
+      <register
+        :class="{ 'sign-up-model': vari }"
+        @registed="vari = false"
+      ></register>
     </div>
   </div>
 </template>

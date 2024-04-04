@@ -27,10 +27,17 @@
               style="display: flex; flex-direction: column; gap: 12px"
             >
               <el-dropdown-item class="dropItem" @click="goLogin">
-                切换账号
+                编辑信息
               </el-dropdown-item>
               <el-dropdown-item class="dropItem" @click="goLogin">
-                注销
+                退出登录
+              </el-dropdown-item>
+              <el-dropdown-item
+                style="color: red"
+                class="dropItem"
+                @click="goLogin"
+              >
+                注销账号
               </el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -51,7 +58,6 @@ const router = useRouter();
 const goLogin = () => {
   router.push('/login');
 };
-console.log('2333');
 </script>
 
 <style lang="scss" scoped>

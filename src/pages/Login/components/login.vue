@@ -93,7 +93,6 @@ const submit = (loginRef) => {
 };
 
 const cetificate = (params) => {
-  console.log(params);
   return params;
 };
 </script>

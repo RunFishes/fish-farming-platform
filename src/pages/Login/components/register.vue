@@ -6,6 +6,14 @@
     :rules="registerRules"
   >
     <h1 class="register-title">注册</h1>
+    <ElFormItem prop="name">
+      <ElInput
+        placeholder="请输入用户名"
+        :prefix-icon="User"
+        v-model="registerParam.name"
+        size="large"
+      ></ElInput>
+    </ElFormItem>
     <ElFormItem prop="username">
       <ElInput
         placeholder="请输入账号"
@@ -73,7 +81,10 @@ import { User, Lock, Message, Crop } from '@element-plus/icons-vue';
 import { ElForm, ElFormItem, ElButton, ElInput } from 'element-plus';
 import { post } from '../../../config/http.config';
 
+const emits = defineEmits(['registed']);
+
 const registerParam = reactive({
+  name: '',
   username: '',
   password: '',
   email: '',
@@ -81,6 +92,7 @@ const registerParam = reactive({
 });
 const registerRef = ref();
 const registerRules = reactive({
+  name: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
   username: [
     { required: true, message: '账号不能为空', trigger: 'blur' },
     {
@@ -132,12 +144,13 @@ const submit = (formEl) => {
         emailCode: registerParam.emailCode,
       });
       const res = await post('REGISTER', {
+        name: registerParam.name,
         username: registerParam.username,
         email: registerParam.email,
         password: registerParam.password,
         emailCode: registerParam.emailCode,
       });
-      console.log(res);
+      if (res) emits('registed');
     } else {
       return false;
     }
@@ -168,7 +181,6 @@ const sendEmailCode = (formEl) => {
         email: registerParam.email,
         emailCode: registerParam.emailCode,
       });
-      window.location.reload();
     } else {
       return false;
     }

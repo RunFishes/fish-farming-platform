@@ -106,11 +106,12 @@ const increaseFormList = ref([
     label: '采购数量/kg',
     key: 'quantity',
     placeholder: '请输入采购数量',
+    type: 'number',
   },
   {
     label: '入库日期',
     key: 'leadTime',
-    type: 'select',
+    type: 'date',
     placeholder: '请输入入库日期',
   },
   {

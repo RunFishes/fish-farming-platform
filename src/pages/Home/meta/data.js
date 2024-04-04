@@ -16,6 +16,11 @@ export const menuList = [
         icon: ElementPlusIconsVue.Umbrella,
         index: 'pond',
       },
+      {
+        name: '权限管理',
+        icon: ElementPlusIconsVue.User,
+        index: 'admin',
+      },
       // {
       //   name: '仓库管理',
       //   icon: ElementPlusIconsVue.PriceTag,

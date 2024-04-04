@@ -8,8 +8,12 @@
     <div class="error-desc">用户权限不足，请登陆后重试或切换账号</div>
     <div class="error-handle">
       <router-link to="/">
-        <el-button 
-          type="primary" style="color: skyblue" size="large">
+        <el-button
+          @click="router.push('/home')"
+          type="primary"
+          style="color: skyblue"
+          size="large"
+        >
           返回首页
         </el-button>
       </router-link>
@@ -18,9 +22,9 @@
         type="primary"
         style="color: skyblue"
         size="large"
-        @click="goBack"
+        @click="router.push('/login')"
       >
-        返回上一页
+        返回登录页
       </el-button>
     </div>
   </div>

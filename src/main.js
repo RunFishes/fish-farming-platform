@@ -4,9 +4,18 @@ import './style.css';
 import App from './App.vue';
 import * as VueRouter from 'vue-router';
 import routes from './config/route.config';
-import localInfo from './utils/storage';
-import { ElButton, ElForm, ElInput, ElFormItem } from 'element-plus';
+import {
+  ElButton,
+  ElForm,
+  ElInput,
+  ElFormItem,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElLoading,
+} from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { permission } from '@/utils/permission';
 
 const app = createApp(App);
 
@@ -16,26 +25,27 @@ const router = VueRouter.createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.path !== "/login" || to.path !== "permission") {
-//     if (localInfo.get("admin")) {
-//       next();
-//     } else {
-//       console.log("到这里了");
-//       next({
-//         path: "/permission",
-//         query: {
-//           type: "401",
-//         },
-//       });
-//     }
-//   }
-//   next();
-// });
+router.beforeEach((to, from, next) => {
+  if (to.name === 'login' || to.name === 'permission') {
+    next();
+  } else {
+    permission(to, next);
+  }
+});
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
-app.use(router).use(ElButton).use(ElForm).use(ElInput).use(ElFormItem);
+app.directive('loading', ElLoading.directive);
+
+app
+  .use(router)
+  .use(ElButton)
+  .use(ElForm)
+  .use(ElInput)
+  .use(ElFormItem)
+  .use(ElDropdown)
+  .use(ElDropdownItem)
+  .use(ElDropdownMenu);
 
 app.mount('#app');

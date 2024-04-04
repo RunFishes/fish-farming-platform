@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { ElMenu, ElMenuItem, ElIcon, ElSubMenu } from 'element-plus';
 import TopBar from './components/TopBar.vue';

@@ -26,7 +26,6 @@ const props = defineProps({
 });
 
 const deepObj = (obj, list) => {
-  console.log(list);
   if (obj.children) {
     return deepObj(obj.children, [...list, obj.value]);
   } else {

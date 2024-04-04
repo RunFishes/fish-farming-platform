@@ -1,15 +1,20 @@
 <template>
   <div class="error-page">
-    <div class="error-code">4<span>0</span>3</div>
+    <div class="error-code">
+      4
+      <span>0</span>
+      3
+    </div>
     <div class="error-desc">服务器错误，请稍后重试</div>
     <div class="error-handle">
       <router-link to="/">
-        <el-button 
-          @click="" 
-          type="primary" 
-          style="color: skyblue" 
+        <el-button
+          @click="router.push('/home')"
+          type="primary"
+          style="color: skyblue"
           size="large"
-        >返回首页
+        >
+          返回首页
         </el-button>
       </router-link>
       <el-button
@@ -17,9 +22,10 @@
         type="primary"
         style="color: skyblue"
         size="large"
-        @click="goBack"
-        >返回上一页</el-button
+        @click="router.push('/login')"
       >
+        返回登录页
+      </el-button>
     </div>
   </div>
 </template>

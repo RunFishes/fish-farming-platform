@@ -37,6 +37,11 @@ const routes = [
         component: () => import('../pages/Home/views/all/pond.vue'),
       },
       {
+        path: 'admin',
+        name: 'admin',
+        component: () => import('../pages/Home/views/all/admin.vue'),
+      },
+      {
         //鱼苗采购
         path: 'fishProcurement',
         name: 'fishProcurement',
