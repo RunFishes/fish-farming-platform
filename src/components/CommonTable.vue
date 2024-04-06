@@ -77,12 +77,18 @@
           <p v-if="!Array.isArray(scope.row[column.key])">
             {{
               column?.customRender
-                ? column.customRender(scope.row(column.key))
+                ? column.customRender(scope.row[column.key])
                 : scope.row[column.key]
             }}
           </p>
           <div v-else>
-            <p v-for="ele in scope.row[column.key]" :key="ele">
+            <div v-if="column.type === 'line'">
+              <LineChart
+                style="width: 180px; height: 180px; box-sizing: border-box"
+                :data="scope.row[column.key]"
+              />
+            </div>
+            <p v-else v-for="ele in scope.row[column.key]" :key="ele">
               {{ column?.customRender ? column.customRender(ele) : ele }}
             </p>
           </div>
@@ -214,6 +220,7 @@
 import { ref, onMounted, toRaw } from 'vue';
 import { getDefaultValue, copyValue } from '../utils/getDefaultValue';
 import SelectAndInput from './SelectAndInput.vue';
+import LineChart from './LineChart.vue';
 import {
   ElForm,
   ElFormItem,

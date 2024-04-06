@@ -22,6 +22,11 @@ const httpList = {
   ADMIN: '/getAdmin',
   UPDATE_PERMISSIONS: '/updatePermissions',
   GET_PERMISSIONS: '/getPermissions',
+  GET_FISH_PRO: '/getFishProcurement',
+  DELETE_FISH_PRO: '/deleteFishProcurement',
+  UPDATE_FISH_PRO: '/updateFishProcurement',
+  ADD_FISH_PRO: '/addFishProcurement',
+  GET_FISH_QUA,
 };
 
 export const post = async (url, params = {}) => {

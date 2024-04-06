@@ -17,232 +17,102 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Head from '../../components/Head.vue';
 import CommonTable from '@/components/CommonTable.vue';
+import { getFishList } from '@/request/pond';
 
+const formList = ref();
 
+const increaseFormList = ref();
 
-const formList = ref([
-  {
-    label: '鱼的种类',
-    key: 'fishType',
-    type: 'select',
-    placeholder: '选择鱼的种类',
-    options: [
-      {
-        label: '大黄鱼',
-        value: 'yellowCroaker',
-      },
-      {
-        label: '鲈鱼',
-        value: 'perch',
-      },
-      {
-        label: '石斑鱼',
-        value: 'grouper',
-      },
-      {
-        label: '草鱼',
-        value: 'grassCarp',
-      },
-      {
-        label: '鲤鱼',
-        value: 'carp',
-      },
-      {
-        label: '鲫鱼',
-        value: 'crucianCarp',
-      },
-    ],
-  },
-  {
-    label: '库存数量',
-    key: 'inventoryNums',
-    placeholder: '输入对应的库存数量',
-  },
-  {
-    label: '鱼苗规格',
-    key: 'fishSize',
-    type: 'select',
-    placeholder: '选择鱼苗规格',
-    options: [
-      {
-        label: '标准规格',
-        value: 'normal',
-      },
-      {
-        label: '大型规格',
-        value: 'large',
-      },
-      {
-        label: '小型规格',
-        value: 'small',
-      },
-      {
-        label: '幼苗/仔鱼',
-        value: 'smaller',
-      },
-    ],
-  },
-  {
-    label: '购入商',
-    key: 'customer',
-    placeholder: '请输入购入商名称',
-    width: 160,
-  },
-  {
-    label: '仓库',
-    key: 'warehouse',
-    type: 'select',
-    placeholder: '选择仓库',
-    options: [
-      {
-        label: '仓库1',
-        value: 'normal',
-      },
-      {
-        label: '仓库2',
-        value: 'large',
-      },
-      {
-        label: '仓库3',
-        value: 'small',
-      },
-    ],
-  },
-  {
-    label: '操作员',
-    key: 'operation',
-    type: 'input',
-    placeholder: '请输入操作员姓名',
-  },
-]);
+const columns = ref();
 
+onMounted(async () => {
+  const data = await getFishList();
+  const fishList = data.map((item) => {
+    return {
+      label: item.fishType,
+      value: item._id,
+    };
+  });
 
-
-const increaseFormList = ref([
-  {
-    label: '鱼的种类',
-    key: 'fishType',
-    type: 'select',
-    placeholder: '选择鱼的种类',
-    options: [
-      {
-        label: '大黄鱼',
-        value: 'yellowCroaker',
-      },
-      {
-        label: '鲈鱼',
-        value: 'perch',
-      },
-      {
-        label: '石斑鱼',
-        value: 'grouper',
-      },
-      {
-        label: '草鱼',
-        value: 'grassCarp',
-      },
-      {
-        label: '鲤鱼',
-        value: 'carp',
-      },
-      {
-        label: '鲫鱼',
-        value: 'crucianCarp',
-      },
-    ],
-  },
-  {
-    label: '库存数量',
-    key: 'inventoryNums',
-    placeholder: '输入对应的库存数量',
-  },
-  {
-    label: '鱼苗规格',
-    key: 'fishSize',
-    type: 'select',
-    placeholder: '选择鱼苗规格',
-    options: [
-      {
-        label: '标准规格',
-        value: 'normal',
-      },
-      {
-        label: '大型规格',
-        value: 'large',
-      },
-      {
-        label: '小型规格',
-        value: 'small',
-      },
-      {
-        label: '幼苗/仔鱼',
-        value: 'smaller',
-      },
-    ],
-  },
-  {
-    label: '购入商',
-    key: 'customer',
-    placeholder: '请输入购入商名称',
-    width: 160,
-  },
-  {
-    label: '仓库',
-    key: 'warehouse',
-    type: 'select',
-    placeholder: '选择仓库',
-    options: [
-      {
-        label: '仓库1',
-        value: 'normal',
-      },
-      {
-        label: '仓库2',
-        value: 'large',
-      },
-      {
-        label: '仓库3',
-        value: 'small',
-      },
-    ],
-  },
-  {
-    label: '操作员',
-    key: 'operation',
-    type: 'input',
-    placeholder: '请输入操作员姓名',
-  },
-])
-
-const columns = ref([
-  {
-    label:'鱼苗的种类',
-    key:'fishType'
-  },
-  {
-    label:'鱼苗引入时间',
-    key:'leadTime'
-  },
-  {
-    label:'购入商',
-    key:'customer'
-  },
-  {
-    label:'鱼苗存活数量',
-    key:'suriveTime'
-  },
-  {
-    label:'鱼苗引入数量',
-    key:'fishInTime'
-  },
-  {
-    label: '操作员',
-    key: 'operation',
-  },
-])
+  formList.value = [
+    {
+      label: '鱼苗编号',
+      key: '_id',
+    },
+    {
+      label: '鱼的种类',
+      key: 'fishType',
+      type: 'select',
+      placeholder: '选择鱼的种类',
+      options: fishList || [],
+    },
+    {
+      label: '鱼苗规格',
+      key: 'fishSize',
+      type: 'select',
+      placeholder: '选择鱼苗规格',
+      options: [
+        {
+          label: '标准规格',
+          value: 'normal',
+        },
+        {
+          label: '大型规格',
+          value: 'large',
+        },
+        {
+          label: '小型规格',
+          value: 'small',
+        },
+        {
+          label: '幼苗/仔鱼',
+          value: 'smaller',
+        },
+      ],
+    },
+  ];
+  increaseFormList.value = [
+    {
+      label: '请选择日期',
+      key: 'time',
+      type: 'date',
+    },
+    {
+      label: '体重',
+      key: 'weightValue',
+      type: 'number',
+    },
+  ];
+  columns.value = [
+    {
+      label: '鱼苗编号',
+      key: '_id',
+    },
+    {
+      label: '鱼苗的种类',
+      key: 'fishType',
+    },
+    {
+      label: '鱼苗规格',
+      key: 'fishSize',
+    },
+    {
+      label: '体重变化',
+      key: 'weight',
+    },
+    {
+      label: '更新人',
+      key: 'updator',
+    },
+    {
+      label: '创建人',
+      key: 'operator',
+    },
+  ];
+});
 </script>
 
 <style lang="scss" scoped></style>

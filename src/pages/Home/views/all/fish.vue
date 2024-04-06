@@ -71,7 +71,6 @@ const increaseFormList = ref([
     label: '鱼的种类',
     key: 'fishType',
     placeholder: '选择鱼的种类',
-    addDisabled: false,
     updateDisabled: true,
   },
   {
