@@ -12,11 +12,11 @@ const routes = [
     name: 'login',
     component: LoginVue,
   },
-  {
-    path: '/visualization',
-    name: 'visualization',
-    component: VisualizationVue,
-  },
+  // {
+  //   path: '/visualization',
+  //   name: 'visualization',
+  //   component: VisualizationVue,
+  // },
   {
     path: '/home',
     name: 'home',
@@ -107,42 +107,57 @@ const routes = [
           import('../pages/Home/views/enviroment/environmentalHistory.vue'),
       },
       //生长情况监测模块
-      {
-        //鱼群生长数据采集
-        path: 'growCollection',
-        name: 'growCollection',
-        component: () => import('../pages/Home/views/grow/growCollection.vue'),
-      },
-      {
-        //生长曲线分析
-        path: 'growAnalysis',
-        name: 'growAnalysis',
-        component: () => import('../pages/Home/views/grow/growAnalysis.vue'),
-      },
-      {
-        //生长状态报告生成
-        path: 'growDoc',
-        name: 'growDoc',
-        component: () => import('../pages/Home/views/grow/growDoc.vue'),
-      },
+      // {
+      //   //鱼群生长数据采集
+      //   path: 'growCollection',
+      //   name: 'growCollection',
+      //   component: () => import('../pages/Home/views/grow/growCollection.vue'),
+      // },
+      // {
+      //   //生长曲线分析
+      //   path: 'growAnalysis',
+      //   name: 'growAnalysis',
+      //   component: () => import('../pages/Home/views/grow/growAnalysis.vue'),
+      // },
+      // {
+      //   //生长状态报告生成
+      //   path: 'growDoc',
+      //   name: 'growDoc',
+      //   component: () => import('../pages/Home/views/grow/growDoc.vue'),
+      // },
       //销售与营销模块
       {
         //鱼类销售管理
         path: 'fishSell',
         name: 'fishSell',
-        component: () => import('../pages/Home/views/grow/growDoc.vue'),
+        component: () => import('../pages/Home/views/custom/fishSell.vue'),
       },
       {
         //客户信息管理
         path: 'custom',
         name: 'custom',
-        component: () => import('../pages/Home/views/grow/growDoc.vue'),
+        component: () => import('../pages/Home/views/custom/custom.vue'),
       },
       {
         //销售数据统计与分析
         path: 'dataAnalysis',
         name: 'dataAnalysis',
-        component: () => import('../pages/Home/views/grow/growDoc.vue'),
+        component: () => import('../pages/Home/views/custom/dataAnalysis.vue'),
+      },
+      {
+        path: 'encyclopedia',
+        name: 'encyclopedia',
+        component: () => import('../pages/Encyclopedia/encyclopedia.vue'),
+      },
+      {
+        path: 'encyclopediaDetail',
+        name: 'encyclopediaDetail',
+        component: () => import('../pages/Encyclopedia/EncyclopediaDetail.vue'),
+      },
+      {
+        path: 'visualization',
+        name: 'visualization',
+        component: VisualizationVue,
       },
     ],
   },

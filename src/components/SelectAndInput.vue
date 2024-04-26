@@ -77,26 +77,26 @@ watch(
   }
 );
 
-const deduplication = (target, def) => {
-  const set = new Set();
-  target.forEach((item) => {
-    set.add(item.selectValue);
-  });
-  const filterList = def.filter((item) => {
-    if (set.has(item.selectValue)) return false;
-    return true;
-  });
-  let lastList = [...target, ...filterList];
-  console.log(lastList);
-  // lastList = lastList.filter((item) => {
-  //   if (props.filterList.includes(item.selectValue)) return true;
-  //   return false;
-  // });
-  return lastList || [];
-};
+// const deduplication = (target, def) => {
+//   const set = new Set();
+//   target.forEach((item) => {
+//     set.add(item.selectValue);
+//   });
+//   const filterList = def.filter((item) => {
+//     if (set.has(item.selectValue)) return false;
+//     return true;
+//   });
+//   let lastList = [...target, ...filterList];
+//   console.log(lastList);
+//   // lastList = lastList.filter((item) => {
+//   //   if (props.filterList.includes(item.selectValue)) return true;
+//   //   return false;
+//   // });
+//   return lastList || [];
+// };
 
 onMounted(() => {
-  list.value = deduplication(list.value, props.defaultList);
+  list.value = props.defaultList;
   selectedKey.value = list.value[0]?.selectValue || '';
   inputValue.value = list.value[0]?.inputValue || '';
 });

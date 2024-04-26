@@ -12,6 +12,13 @@
       :form-list="formList"
       :table-column="columns"
       :increase-form-list="increaseFormList"
+      :get-data="getData"
+      :increase-data="addFishQuality"
+      :delete-data="deleteFishQuality"
+      :update-data="updateFishQuality"
+      :is-add-show="false"
+      :is-delete-show="false"
+      :isDownloaddShow="false"
     />
   </div>
 </template>
@@ -21,12 +28,60 @@ import { ref, onMounted } from 'vue';
 import Head from '../../components/Head.vue';
 import CommonTable from '@/components/CommonTable.vue';
 import { getFishList } from '@/request/pond';
+import {
+  getFishQuality,
+  addFishQuality,
+  deleteFishQuality,
+  updateFishQuality,
+} from '@/request/fishQuality';
+import dayjs from 'dayjs';
 
 const formList = ref();
 
 const increaseFormList = ref();
 
 const columns = ref();
+
+const sizeList = [
+  {
+    label: '标准规格',
+    value: 'normal',
+  },
+  {
+    label: '大型规格',
+    value: 'large',
+  },
+  {
+    label: '小型规格',
+    value: 'small',
+  },
+  {
+    label: '幼苗/仔鱼',
+    value: 'smaller',
+  },
+];
+
+const getData = async (params) => {
+  const res = await getFishQuality(params);
+  return {
+    data: res.data.map((item) => {
+      return {
+        ...item,
+        weight: item.weight
+          .map((item) => ({
+            time: new Date(item.time),
+            weightValue: item.weightValue,
+          }))
+          .sort((a, b) => a.time - b.time)
+          .map((item) => ({
+            time: dayjs(item.time).format('YYYY-MM-DD'),
+            weightValue: item.weightValue,
+          })),
+      };
+    }),
+    page: res.page,
+  };
+};
 
 onMounted(async () => {
   const data = await getFishList();
@@ -98,10 +153,14 @@ onMounted(async () => {
     {
       label: '鱼苗规格',
       key: 'fishSize',
+      customRender: (data) => {
+        return sizeList.find((item) => item.value === data)?.label || '';
+      },
     },
     {
       label: '体重变化',
       key: 'weight',
+      type: 'line',
     },
     {
       label: '更新人',

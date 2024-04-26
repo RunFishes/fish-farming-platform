@@ -87,11 +87,11 @@ export const menuList = [
         icon: ElementPlusIconsVue.Stamp,
         index: 'feedRecord',
       },
-      {
-        name: '饲料成本统计',
-        icon: ElementPlusIconsVue.Platform,
-        index: 'feedStatistics',
-      },
+      // {
+      //   name: '饲料成本统计',
+      //   icon: ElementPlusIconsVue.Platform,
+      //   index: 'feedStatistics',
+      // },
     ],
   },
   {
@@ -100,39 +100,39 @@ export const menuList = [
     index: 'enviroment',
     children: [
       {
-        name: '温度、光照等环境参数监测',
+        name: '环境参数监测',
         icon: ElementPlusIconsVue.Service,
         index: 'monitor',
       },
       {
-        name: '环境参数历史数据查询',
+        name: '环境监测管理',
         icon: ElementPlusIconsVue.Connection,
         index: 'environmentalHistory',
       },
     ],
   },
-  {
-    name: '生长情况监测模块',
-    icon: ElementPlusIconsVue.Search,
-    index: 'grow',
-    children: [
-      {
-        name: '鱼群生长数据采集',
-        icon: ElementPlusIconsVue.Position,
-        index: 'growCollection',
-      },
-      {
-        name: '生长曲线分析',
-        icon: ElementPlusIconsVue.TrendCharts,
-        index: 'growAnalysis',
-      },
-      {
-        name: '生长状态报告生成',
-        icon: ElementPlusIconsVue.Document,
-        index: 'growDoc',
-      },
-    ],
-  },
+  // {
+  //   name: '生长情况监测模块',
+  //   icon: ElementPlusIconsVue.Search,
+  //   index: 'grow',
+  //   children: [
+  //     {
+  //       name: '鱼群生长数据采集',
+  //       icon: ElementPlusIconsVue.Position,
+  //       index: 'growCollection',
+  //     },
+  //     {
+  //       name: '生长曲线分析',
+  //       icon: ElementPlusIconsVue.TrendCharts,
+  //       index: 'growAnalysis',
+  //     },
+  //     {
+  //       name: '生长状态报告生成',
+  //       icon: ElementPlusIconsVue.Document,
+  //       index: 'growDoc',
+  //     },
+  //   ],
+  // },
   {
     name: '销售与营销模块',
     icon: ElementPlusIconsVue.Sell,
@@ -148,11 +148,11 @@ export const menuList = [
         icon: ElementPlusIconsVue.UserFilled,
         index: 'custom',
       },
-      {
-        name: '销售数据统计与分析',
-        icon: ElementPlusIconsVue.Histogram,
-        index: 'dataAnalysis',
-      },
+      // {
+      //   name: '销售数据统计与分析',
+      //   icon: ElementPlusIconsVue.Histogram,
+      //   index: 'dataAnalysis',
+      // },
     ],
   },
 ];

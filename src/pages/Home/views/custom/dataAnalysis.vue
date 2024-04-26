@@ -2,9 +2,9 @@
   <div class="body">
     <Head
       :bread-list="{
-        value: '饲料管理模块',
+        value: '销售与营销模块',
         children: {
-          value: '饲料投喂记录',
+          value: '销售数据统计与分析',
         },
       }"
     />

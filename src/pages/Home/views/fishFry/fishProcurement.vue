@@ -16,8 +16,14 @@
       :delete-data="deleteFishPro"
       :update-data="updateFishPro"
       :get-data="getFishPro"
+      @refresh="getLineData"
     />
-    <LineChart></LineChart>
+    <div style="display: flex; justify-content: center">
+      <LineChart
+        style="height: 400px; width: 1000px"
+        :data="lineData"
+      ></LineChart>
+    </div>
   </div>
 </template>
 
@@ -33,12 +39,27 @@ import {
   addFishPro,
   updateFishPro,
 } from '@/request/fishFry';
+import { dateSort } from '@/utils/dateSort';
 
 const formList = ref([]);
 
 const columns = ref([]);
 
 const increaseFormList = ref([]);
+
+const lineData = ref([]);
+
+const getLineData = (data) => {
+  const list = dateSort(
+    data?.length
+      ? data.map((item) => ({
+          time: item.moneySubmit,
+          value: item.fishPrice,
+        }))
+      : []
+  );
+  lineData.value = list;
+};
 
 const sizeList = [
   {
@@ -96,6 +117,10 @@ onMounted(async () => {
     },
   ];
   columns.value = [
+    {
+      label: '鱼苗编号',
+      key: '_id',
+    },
     {
       label: '鱼的种类',
       key: 'fishType',
@@ -182,7 +207,6 @@ onMounted(async () => {
 .body {
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
 </style>
 1

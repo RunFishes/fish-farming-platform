@@ -12,6 +12,10 @@
       :table-column="columns"
       :form-list="formList"
       :increase-form-list="increaseFormList"
+      :update-data="updateFeedManagement"
+      :increase-data="addFeedManagement"
+      :get-data="getFeedManagement"
+      :delete-data="deleteFeedManagement"
     />
   </div>
 </template>
@@ -20,6 +24,13 @@
 import { ref } from 'vue';
 import Head from '../../components/Head.vue';
 import CommonTable from '@/components/CommonTable.vue';
+import * as echart from 'echarts';
+import {
+  getFeedManagement,
+  deleteFeedManagement,
+  updateFeedManagement,
+  addFeedManagement,
+} from '@/request/feed';
 const formList = ref([
   {
     label: '饲料名称',
@@ -38,6 +49,10 @@ const formList = ref([
   },
 ]);
 const columns = ref([
+  {
+    label: '饲料编号',
+    key: '_id',
+  },
   {
     label: '饲料名称',
     key: 'feedName',
@@ -72,7 +87,11 @@ const columns = ref([
   },
   {
     label: '操作员',
-    key: 'operation',
+    key: 'operator',
+  },
+  {
+    label: '更新员',
+    key: 'updator',
   },
 ]);
 const increaseFormList = ref([
@@ -118,6 +137,7 @@ const increaseFormList = ref([
     label: '剩余库存/kg',
     key: 'inventory',
     placeholder: '请输入库存数量',
+    type: 'number',
   },
 ]);
 

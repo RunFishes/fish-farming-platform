@@ -1,5 +1,4 @@
 import { post, get } from '@/config/http.config';
-import { param } from 'jquery';
 
 export const getPond = (params) => {
   return post('POND', params);
@@ -20,4 +19,8 @@ export const deletePond = (params) => {
 
 export const getFishList = () => {
   return get('FISH_LIST');
+};
+
+export const getAllPond = () => {
+  return post('GET_ALL_POND');
 };

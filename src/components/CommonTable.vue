@@ -14,6 +14,7 @@
       >
         <div v-if="item.type === 'select'">
           <ElSelect
+            clearable
             :placeholder="item.placeholder || '请选择'"
             v-model="formState[item.key]"
             :multiple="item.isMutiple || false"
@@ -60,6 +61,13 @@
       <ElButton @click="increaseRowData" v-if="props.isAddShow">
         导入数据
       </ElButton>
+      <ElButton
+        style="background-color: rgb(49, 182, 71); color: white"
+        @click="downloadData"
+        v-if="props.isDownloaddShow"
+      >
+        下载excel表
+      </ElButton>
     </ElForm>
     <slot name="table">
       <ElTable
@@ -71,6 +79,7 @@
           :prop="column.key"
           v-for="column in props.tableColumn"
           :min-width="column.width || '120'"
+          :width="column.type === 'line' ? 300 : undefined"
           :label="column.label"
           #default="scope"
         >
@@ -84,7 +93,7 @@
           <div v-else>
             <div v-if="column.type === 'line'">
               <LineChart
-                style="width: 180px; height: 180px; box-sizing: border-box"
+                style="width: 300px; height: 300px"
                 :data="scope.row[column.key]"
               />
             </div>
@@ -135,6 +144,7 @@
           >
             <div v-if="item.type === 'select'">
               <ElSelect
+                clearable
                 :disabled="
                   increasseType === 'add'
                     ? item?.addDisabled || false
@@ -142,6 +152,30 @@
                 "
                 :placeholder="item.placeholder || '请选择'"
                 v-model="increaseState[item.key]"
+                :multiple="item.isMutiple || false"
+                :style="{ width: `${item.width || 300}px` }"
+              >
+                <ElOption
+                  v-for="opt in item.options || []"
+                  :key="opt.value"
+                  :label="opt.label"
+                  :value="opt.value"
+                />
+              </ElSelect>
+            </div>
+            <div v-else-if="item.type === 'selectRemote'">
+              <ElSelect
+                clearable
+                :disabled="
+                  increasseType === 'add'
+                    ? item?.addDisabled || false
+                    : item.updateDisabled || false
+                "
+                :placeholder="item.placeholder || '请选择'"
+                v-model="increaseState[item.key]"
+                filterable
+                remote
+                ::remote-method="(query)=>item.remoteMethod(query,item.options)"
                 :multiple="item.isMutiple || false"
                 :style="{ width: `${item.width || 300}px` }"
               >
@@ -170,7 +204,11 @@
               <SelectAndInput
                 :input-placeholder="item.inputPlaceholder || '请输入'"
                 :selectPlaceholder="item.selectPlaceholder || '请选择'"
-                :default-list="item.defaultList || []"
+                :default-list="
+                  increasseType === 'add'
+                    ? item?.defaultList || []
+                    : increaseState[item.key]
+                "
                 v-model:list="increaseState[item.key]"
                 :filter-list="item.filterList || []"
               />
@@ -235,7 +273,9 @@ import {
   ElScrollbar,
   ElPagination,
   ElInputNumber,
+  ElAutocomplete,
 } from 'element-plus';
+import downloadExcel from '@/utils/downloadExcel';
 const props = defineProps({
   // {
   //   label: 对应label名
@@ -271,6 +311,10 @@ const props = defineProps({
     default: true,
   },
   isDeleteShow: {
+    type: Boolean,
+    default: true,
+  },
+  isDownloaddShow: {
     type: Boolean,
     default: true,
   },
@@ -348,6 +392,8 @@ const props = defineProps({
   },
 });
 
+const emits = defineEmits(['refresh']);
+
 const state = ref({
   data: [],
   page: {
@@ -379,6 +425,7 @@ const submit = async () => {
   state.value.page = res.page;
   if (res) {
     state.value = res;
+    emits('refresh', res.data);
   }
 
   setTimeout(() => {
@@ -413,7 +460,6 @@ const increaseRowData = () => {
     increaseState.value = {};
     increaseState.value[item.key] =
       copyValue(item.defaultValue) || getDefaultValue(item.formType);
-    console.log(increaseState.value);
   });
   increaseShow.value = true;
 };
@@ -433,6 +479,10 @@ const increaseItem = async () => {
 const deleteItem = async (row) => {
   const res = await props.deleteData(row);
   submit();
+};
+
+const downloadData = async () => {
+  const res = await downloadExcel(props.tableColumn, state.value.data);
 };
 
 onMounted(() => {

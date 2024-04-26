@@ -43,7 +43,11 @@
             <span>{{ ele.name }}</span>
           </el-menu-item>
         </el-sub-menu>
-        <el-menu-item index="/visualization">
+        <el-menu-item index="/home/encyclopedia">
+          <el-icon><Search /></el-icon>
+          <template #title>鱼类百科</template>
+        </el-menu-item>
+        <el-menu-item index="/home/visualization">
           <el-icon><DataBoard /></el-icon>
           <template #title>大数据看板</template>
         </el-menu-item>
@@ -81,7 +85,6 @@ const isCollapse = ref(true);
     display: flex;
     flex-direction: row;
     flex: 1;
-
     .el-menu-vertical:not(.el-menu--collapse) {
       min-width: 250px;
       .menu-head {

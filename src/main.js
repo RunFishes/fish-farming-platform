@@ -25,8 +25,16 @@ const router = VueRouter.createRouter({
   routes,
 });
 
+const noPermitsList = [
+  'login',
+  'permission',
+  'visualization',
+  'encyclopediaDetail',
+  'encyclopedia',
+];
+
 router.beforeEach((to, from, next) => {
-  if (to.name === 'login' || to.name === 'permission') {
+  if (noPermitsList.includes(to.name)) {
     next();
   } else {
     permission(to, next);

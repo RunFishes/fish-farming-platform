@@ -16,12 +16,19 @@
       :increase-data="addFishInfo"
       :update-data="updateFish"
       :delete-data="deleteFish"
+      @refresh="getChartData"
     />
+    <div class="chart">
+      <roundChart
+        style="height: 400px; width: 400px"
+        :data="chartData"
+      ></roundChart>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Head from '../../components/Head.vue';
 import CommonTable from '@/components/CommonTable.vue';
 import {
@@ -30,6 +37,12 @@ import {
   updateFish,
   deleteFish,
 } from '@/request/fish';
+import { getFishList } from '@/request/pond';
+
+import roundChart from '@/components/roundShape.vue';
+
+const chartData = ref([]);
+
 const formList = ref([
   {
     label: '鱼的种类',
@@ -86,6 +99,18 @@ const increaseFormList = ref([
     type: 'number',
   },
 ]);
+
+const getChartData = async () => {
+  const data = await getFishList();
+  chartData.value = data.map((item) => ({
+    name: item.fishType,
+    value: item.quantity,
+  }));
+};
+
+onMounted(() => {
+  getChartData();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -93,5 +118,10 @@ const increaseFormList = ref([
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+.chart {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 </style>
