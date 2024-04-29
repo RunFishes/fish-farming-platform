@@ -44,7 +44,9 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
+console.log('欢迎使用鱼塘管理系统');
 console.log('骚操作');
+console.log('第三次提交');
 
 app.directive('loading', ElLoading.directive);
 
