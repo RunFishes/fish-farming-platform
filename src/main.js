@@ -44,6 +44,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
+console.log('骚操作');
+
 app.directive('loading', ElLoading.directive);
 
 app
